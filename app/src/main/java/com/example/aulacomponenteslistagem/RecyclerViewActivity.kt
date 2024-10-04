@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,13 +36,18 @@ class RecyclerViewActivity : AppCompatActivity() {
         rvLista = findViewById(R.id.rv_lista)
         rvLista.adapter = MensagemAdapter(lista)
 
-        /*//Utilizando Linear Layout Manager
-        //rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)*/
+        //Utilizando Linear Layout Manager
+        rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+        //Utilizando um divisor decorativo na recyclerView
+        rvLista.addItemDecoration(
+            DividerItemDecoration(this, RecyclerView.VERTICAL)
+        )
 
         //Utilizando Grid layout manager
         //Na linha do gridlayout, sempre estará com o tamanho do maior item
         // Span count é o número de colunas do grid
-        rvLista.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        //rvLista.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
 
         /*//Utlizando o Stagerred GridLayout Manager
         //Ele organiza os itens em grade, porém não mantendo em linha de

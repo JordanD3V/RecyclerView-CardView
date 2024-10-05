@@ -2,6 +2,7 @@ package com.example.aulacomponenteslistagem
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 class RecyclerViewActivity : AppCompatActivity() {
 
     private lateinit var rvLista: RecyclerView
+    private lateinit var btnExecutar: Button
+    private lateinit var mensagemAdapter: MensagemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,24 +30,41 @@ class RecyclerViewActivity : AppCompatActivity() {
             insets
         }
 
-        val lista = listOf(
-            Mensagem("Jordan", "Não esquece da mochila", "18:00"),
+        val lista = mutableListOf(
+            Mensagem("Jordan", "Não esquece?", "18:00"),
             Mensagem("Paola", "Advinha a boa do dia?", "11:00"),
             Mensagem("Miguel", "X1 fraco?", "22:00"),
             Mensagem("Linda", "Vem pro culto?", "15:00"),
-            Mensagem("Valfrido", "Cadê voçê?", "17:00")
+            Mensagem("Valfrido", "Cadê voçê?", "17:00"),
+            Mensagem("Rafael", "Churras domingo", "17:00"),
+            Mensagem("Leo", "VAMOOOO", "17:00"),
+            Mensagem("Magda", "Prova?", "17:00"),
+            Mensagem("Ana", "Boa noite", "17:00"),
+            Mensagem("Carolina", "Sai fora", "17:00"),
+            Mensagem("Wesley", "Anima um burger?", "17:00"),
+            Mensagem("Thais", "Amor, vamos no parque?", "17:00")
         )
 
         rvLista = findViewById(R.id.rv_lista)
-        rvLista.adapter = MensagemAdapter(lista){mensagem ->
+        btnExecutar= findViewById(R.id.btn_executar)
+        mensagemAdapter = MensagemAdapter { mensagem ->
             Toast.makeText(this, "Msg: $mensagem", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, ListViewActivity2::class.java)
             intent.putExtra("mensagem", mensagem)
             startActivity(intent)
         }
+        rvLista.adapter = mensagemAdapter
 
+        mensagemAdapter.atualizarListaDados(
+            lista
+        )
         //Utilizando Linear Layout Manager
         rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+        btnExecutar.setOnClickListener {
+            lista.add(Mensagem("Regina", "Sumiu da festa pq?", "03:00"))
+            mensagemAdapter.atualizarListaDados(lista)
+        }
 
         /*//Utilizando um divisor decorativo na recyclerView
         rvLista.addItemDecoration(

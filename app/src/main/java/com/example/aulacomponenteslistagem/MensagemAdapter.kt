@@ -5,15 +5,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 // Quando usamos <> dentro dele indicará o tipo que será nossa classe
 // Neste caso, a classe Adapter obriga a receber uma classe do tipo ViewHolder entre <>
-class MensagemAdapter(private val lista: List<Mensagem>, private val clique: (String) -> Unit) :
+class MensagemAdapter(private val clique: (String) -> Unit) :
     Adapter<MensagemAdapter.MensagemViewHolder>() {
+
+    private var listaMensagens = mutableListOf<Mensagem>()
+
+    fun atualizarListaDados(lista: MutableList <Mensagem>){
+
+        //listaMensagens.addAll(lista)
+        listaMensagens = lista
+
+        //Notifica a Recycler View a recarregar dados em caso de alteração
+        notifyDataSetChanged()
+    }
 
     /*//ViewHolder é onde iremos armazenar o nosso layout
     //E este layout será associado
@@ -71,7 +81,7 @@ class MensagemAdapter(private val lista: List<Mensagem>, private val clique: (St
 
     //Ao vincula os dados com a visualização
     override fun onBindViewHolder(holder: MensagemViewHolder, position: Int) {
-        val mensagem = lista[position]
+        val mensagem = listaMensagens[position]
         holder.bind(mensagem)
     }
 
@@ -79,7 +89,7 @@ class MensagemAdapter(private val lista: List<Mensagem>, private val clique: (St
     //Aqui passamos a quantidade de itens para que possa criar
     //No caso, será o tamanho da nossa lista
     override fun getItemCount(): Int {
-        return lista.size
+        return listaMensagens.size
     }
 
 }

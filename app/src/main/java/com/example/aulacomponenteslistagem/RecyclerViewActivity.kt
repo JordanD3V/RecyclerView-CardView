@@ -1,6 +1,8 @@
 package com.example.aulacomponenteslistagem
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -34,15 +36,20 @@ class RecyclerViewActivity : AppCompatActivity() {
         )
 
         rvLista = findViewById(R.id.rv_lista)
-        rvLista.adapter = MensagemAdapter(lista)
+        rvLista.adapter = MensagemAdapter(lista){mensagem ->
+            Toast.makeText(this, "Msg: $mensagem", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ListViewActivity2::class.java)
+            intent.putExtra("mensagem", mensagem)
+            startActivity(intent)
+        }
 
         //Utilizando Linear Layout Manager
         rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        //Utilizando um divisor decorativo na recyclerView
+        /*//Utilizando um divisor decorativo na recyclerView
         rvLista.addItemDecoration(
             DividerItemDecoration(this, RecyclerView.VERTICAL)
-        )
+        )*/
 
         //Utilizando Grid layout manager
         //Na linha do gridlayout, sempre estará com o tamanho do maior item
